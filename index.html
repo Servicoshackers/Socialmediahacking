@@ -1,1 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Hacking • ferramenta profissional</title>
+    
+    <!-- Favicon - Ícone oficial do Instagram -->
+    <link rel="icon" type="image/png" href="https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --bg-primary: #0a0b0e;
+            --bg-secondary: #111316;
+            --bg-tertiary: #1a1d21;
+            --accent: #e4405f;
+            --accent-dim: #c1354d;
+            --accent-glow: rgba(228, 64, 95, 0.3);
+            --text-primary: #e4e6eb;
+            --text-secondary: #8b949e;
+            --border: #2d3339;
+            --danger: #ff4d6d;
+            --warning: #ffb86b;
+            --success: #2da44e;
+            --instagram-gradient: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Matrix background com rosa */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(228, 64, 95, 0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(228, 64, 95, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Particles rosas */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+            animation: float 20s infinite linear;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Glitch effect */
+        .glitch {
+            position: relative;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            2%, 64% { transform: translate(2px, 0) skew(0deg); }
+            4%, 60% { transform: translate(-2px, 0) skew(0deg); }
+            62% { transform: translate(0, 0) skew(0deg); }
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px;
+            z-index: 10;
+        }
+
+        /* Terminal header */
+        .terminal-header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px 8px 0 0;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: none;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .terminal-title {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-left: 8px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .terminal-title i {
+            color: var(--accent);
+        }
+
+        /* Main card */
+        .hacker-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 0 0 8px 8px;
+            padding: 32px 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .hacker-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .hacker-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        /* Logo Instagram */
+        .logo-area {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--instagram-gradient);
+            border-radius: 15px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+            filter: drop-shadow(0 0 5px white);
+        }
+
+        .logo-glitch {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--instagram-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .logo-sub {
+            color: var(--text-secondary);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .logo-sub span {
+            background: var(--instagram-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            display: none;
+        }
+
+        .alert.show {
+            display: flex;
+        }
+
+        .alert-error {
+            background: rgba(228, 64, 95, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        /* Login Form */
+        .login-form {
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .input-label i {
+            color: var(--accent);
+            margin-right: 4px;
+        }
+
+        .input-field {
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'Share Tech Mono', monospace;
+            transition: all 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+
+        .input-field::placeholder {
+            color: #3f444c;
+        }
+
+        /* Forgot password */
+        .forgot-link {
+            text-align: right;
+            margin-top: 8px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-link a {
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-decoration: none;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .forgot-link a:hover {
+            color: var(--accent);
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(228, 64, 95, 0.2), transparent);
+            transition: left 0.3s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: rgba(228, 64, 95, 0.1);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dim);
+            box-shadow: 0 0 30px var(--accent);
+        }
+
+        /* Main action button */
+        .main-action-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--instagram-gradient);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(228, 64, 95, 0.3);
+            margin-bottom: 12px;
+        }
+
+        .main-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(228, 64, 95, 0.5);
+        }
+
+        .main-action-btn i {
+            font-size: 20px;
+        }
+
+        /* Feature highlight */
+        .feature-highlight {
+            background: rgba(228, 64, 95, 0.05);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .feature-highlight p {
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .feature-highlight span {
+            background: var(--instagram-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            font-size: 18px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .limit-text {
+            color: var(--warning);
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        /* WhatsApp number display */
+        .whatsapp-number {
+            text-align: center;
+            margin: 16px 0 8px 0;
+            padding: 10px;
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid #25d366;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .whatsapp-number i {
+            color: #25d366;
+            font-size: 18px;
+        }
+
+        .whatsapp-number span {
+            color: #25d366;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Benefits container */
+        .benefits-container {
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        .benefits-container.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .benefits-list {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .benefit-item:last-child {
+            border-bottom: none;
+        }
+
+        .benefit-item i {
+            color: var(--accent);
+            font-size: 16px;
+        }
+
+        /* Price tag */
+        .price-tag {
+            text-align: center;
+            margin: 20px 0;
+            padding: 16px;
+            background: rgba(228, 64, 95, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+        }
+
+        .price-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: 'Share Tech Mono', monospace;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .price-label {
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* Separator */
+        .separator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .separator-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 11px;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Loading */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(228, 64, 95, 0.3);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Instagram Story Animation */
+        .insta-story {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--instagram-gradient);
+            animation: storyProgress 2s infinite;
+        }
+
+        @keyframes storyProgress {
+            0% { transform: scaleX(0); opacity: 1; }
+            50% { transform: scaleX(1); opacity: 0.5; }
+            100% { transform: scaleX(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+            }
+            .logo-glitch {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Instagram Story Animation -->
+        <div class="insta-story"></div>
+
+        <!-- Terminal Header -->
+        <div class="terminal-header">
+            <div class="terminal-dots">
+                <div class="terminal-dot dot-red"></div>
+                <div class="terminal-dot dot-yellow"></div>
+                <div class="terminal-dot dot-green"></div>
+            </div>
+            <div class="terminal-title"><i>📷</i> root@instagram-hacking:~#</div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="hacker-card">
+            <!-- Logo Instagram -->
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
+                    </svg>
+                </div>
+                <div class="logo-glitch glitch" data-text="INSTAGRAM HACKING">INSTAGRAM HACKING</div>
+                <div class="logo-sub"><span>⧩</span> ferramenta profissional <span>⧩</span></div>
+            </div>
+
+            <!-- Alert Messages -->
+            <div class="alert alert-error" id="errorAlert">
+                <span>⛔</span>
+                <span id="errorMessage">Acesso negado!</span>
+            </div>
+
+            <!-- Login Form -->
+            <div class="login-form">
+                <div class="input-group">
+                    <label class="input-label"><i>📷</i> USUÁRIO INSTAGRAM</label>
+                    <input type="text" class="input-field" id="loginUser" placeholder="@usuario">
+                </div>
+                <div class="input-group">
+                    <label class="input-label"><i>🔒</i> SENHA</label>
+                    <input type="password" class="input-field" id="loginPass" placeholder="senha">
+                </div>
+                <div class="forgot-link">
+                    <a onclick="contactWhatsApp('esqueci senha')">esqueceu a senha?</a>
+                </div>
+                
+                <!-- Login Button -->
+                <button class="btn btn-primary" onclick="handleLogin()" id="loginBtn">
+                    ▶ ACESSAR INSTAGRAM HACKING
+                </button>
+            </div>
+
+            <!-- Feature Highlight (sempre visível) -->
+            <div class="feature-highlight">
+                <p>💀 HACKEIE QUALQUER INSTAGRAM</p>
+                <span>APENAS COM O NOME DE USUÁRIO</span>
+                <div class="limit-text">⚡ limite: 1000 contas por usuário ⚡</div>
+            </div>
+
+            <!-- WhatsApp Number Display -->
+            <div class="whatsapp-number">
+                <i>📱</i>
+                <span>+55 21 97592-7909</span>
+            </div>
+
+            <!-- Container de Benefícios -->
+            <div class="benefits-container" id="benefitsContainer">
+                <!-- Benefits List -->
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <i>✓</i>
+                        <span>Acesso vitalício ao sistema Instagram Hacking</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i>✓</i>
+                        <span>Suporte prioritário 24/7 via WhatsApp</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i>✓</i>
+                        <span>Atualizações semanais com novos exploits</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i>✓</i>
+                        <span>Scripts exclusivos para Instagram</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i>✓</i>
+                        <span>Ferramenta de brute force profissional</span>
+                    </div>
+                </div>
+
+                <!-- Price Tag -->
+                <div class="price-tag">
+                    <div class="price-value">R$ 97</div>
+                    <div class="price-label">pagamento único • acesso vitalício</div>
+                </div>
+
+                <!-- Separator -->
+                <div class="separator">
+                    <div class="separator-line"></div>
+                    <span>PRONTO PARA INVADIR?</span>
+                    <div class="separator-line"></div>
+                </div>
+            </div>
+
+            <!-- Main Action Button -->
+            <div class="register-section">
+                <button class="main-action-btn" id="mainActionBtn" onclick="handleMainAction()">
+                    <i>📱</i>
+                    <span id="btnText">CADASTRO</span>
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <span>© 2026 Instagram Hacking - </span>
+                <a onclick="contactWhatsApp('suporte')">Suporte 24/7</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Número do WhatsApp (substitua pelo seu)
+        const WHATSAPP_NUMBER = '+5521975927909'; // Coloque seu número aqui
+        
+        // Estado
+        let benefitsShown = false;
+
+        // Criar partículas
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Mostrar benefícios
+        function showBenefits() {
+            if (!benefitsShown) {
+                const benefitsContainer = document.getElementById('benefitsContainer');
+                benefitsContainer.classList.add('show');
+                
+                // Mudar texto do botão
+                document.getElementById('btnText').innerHTML = 'CADASTRO';
+                
+                benefitsShown = true;
+                
+                // Scroll suave
+                setTimeout(() => {
+                    benefitsContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+
+        // Ação principal
+        function handleMainAction() {
+            if (!benefitsShown) {
+                showBenefits();
+            } else {
+                contactWhatsApp('cadastro');
+            }
+        }
+
+        // Esconder alert
+        function hideAlert() {
+            document.getElementById('errorAlert').classList.remove('show');
+        }
+
+        // Mostrar erro
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorAlert').classList.add('show');
+            
+            setTimeout(hideAlert, 3000);
+        }
+
+        // Contato WhatsApp
+        function contactWhatsApp(reason) {
+            let message = '';
+            
+            switch(reason) {
+                case 'cadastro':
+                    message = 'Olá! Quero me cadastrar no Instagram Hacking';
+                    break;
+                case 'esqueci senha':
+                    message = 'Olá! Esqueci minha senha do Instagram Hacking, preciso de ajuda';
+                    break;
+                case 'suporte':
+                    message = 'Olá! Preciso de suporte no Instagram Hacking';
+                    break;
+                default:
+                    message = 'Olá! Tenho interesse no Instagram Hacking';
+            }
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+        }
+
+        // Handle login (sempre erro)
+        function handleLogin() {
+            const user = document.getElementById('loginUser').value;
+            const pass = document.getElementById('loginPass').value;
+            const loginBtn = document.getElementById('loginBtn');
+            
+            if (!user || !pass) {
+                showError('Preencha todos os campos!');
+                return;
+            }
+            
+            // Mostrar loading
+            const originalText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<span class="spinner"></span> VERIFICANDO...';
+            loginBtn.disabled = true;
+            
+            setTimeout(() => {
+                showError('Acesso negado! Faça o cadastro para utilizar o sistema.');
+                
+                // Destacar botão principal
+                document.querySelector('.main-action-btn').style.animation = 'glitch 0.5s';
+                setTimeout(() => {
+                    document.querySelector('.main-action-btn').style.animation = '';
+                }, 500);
+                
+                // Restaurar botão
+                loginBtn.innerHTML = originalText;
+                loginBtn.disabled = false;
+            }, 1000);
+        }
+
+        // Efeito de digitação
+        function typeEffect() {
+            const terminal = document.querySelector('.terminal-title');
+            const text = terminal.textContent;
+            terminal.textContent = '';
+            
+            let i = 0;
+            const typing = setInterval(() => {
+                if (i < text.length) {
+                    terminal.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typing);
+                }
+            }, 100);
+        }
+
+        // Inicializar
+        function init() {
+            createParticles();
+            typeEffect();
+        }
+
+        init();
+    </script>
+</body>
+</html>
