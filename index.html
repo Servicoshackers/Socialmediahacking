@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Hacking • penetration tool</title>
+    
+    <!-- Favicon - Ícone do Instagram -->
+    <link rel="icon" type="image/png" href="https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.instagram.com/static/images/ico/favicon-32.png/bb137bbb1a9b.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.instagram.com/static/images/ico/favicon-16.png/408aa5fc365f.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0c0e;
+            --bg-secondary: #121416;
+            --bg-tertiary: #1a1d20;
+            --accent: #e4405f;
+            --accent-glow: rgba(228, 64, 95, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #8e8e8e;
+            --border: #262626;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Background pattern */
+        .pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(228, 64, 95, 0.03) 1px, transparent 0);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text {
+            font-weight: 600;
+            font-size: 18px;
+            background: linear-gradient(135deg, #f58529, #dd2a7b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status {
+            display: flex;
+            gap: 16px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+
+        .card-header {
+            padding: 20px 24px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .card-title i {
+            color: var(--accent);
+            font-size: 20px;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .badge.success {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .card-content {
+            padding: 24px;
+        }
+
+        /* Instagram input */
+        .instagram-input {
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .input-prefix {
+            padding: 12px 16px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-right: 1px solid var(--border);
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .input-field::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.5;
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Machine grid - TEMPO MAIOR */
+        .machine-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .machine-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .machine-item.active {
+            border-color: var(--accent);
+            background: rgba(228, 64, 95, 0.1);
+        }
+
+        .machine-item.completed {
+            border-color: var(--success);
+            background: rgba(0, 184, 148, 0.1);
+        }
+
+        .machine-item.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 2px;
+            right: 6px;
+            color: var(--success);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .machine-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .machine-status {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .machine-progress {
+            height: 3px;
+            background: var(--bg-primary);
+            margin-top: 8px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .machine-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .machine-item.completed .machine-bar {
+            background: var(--success);
+        }
+
+        /* Progress bar */
+        .progress-container {
+            margin: 24px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #ff6b81);
+            transition: width 0.3s;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(228, 64, 95, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-danger {
+            background: rgba(214, 48, 49, 0.1);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: var(--border);
+            color: var(--text-secondary);
+            background: var(--bg-tertiary);
+        }
+
+        .btn-success {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        /* Session panel */
+        .session-panel {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            position: relative;
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .session-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            z-index: 2;
+            transition: opacity 0.5s;
+        }
+
+        .session-placeholder.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .lock-icon {
+            font-size: 48px;
+            color: var(--text-secondary);
+            animation: lockPulse 2s infinite;
+            margin-bottom: 8px;
+        }
+
+        @keyframes lockPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .placeholder-title {
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .placeholder-subtitle {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .session-content {
+            opacity: 0;
+            transition: opacity 0.5s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .session-content.visible {
+            opacity: 1;
+        }
+
+        .instagram-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            border: 3px solid var(--accent);
+            overflow: hidden;
+        }
+
+        .instagram-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .profile-header {
+            margin-bottom: 16px;
+        }
+
+        .session-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .session-username {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .profile-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(228, 64, 95, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--accent);
+            margin-top: 4px;
+        }
+
+        /* Informações realistas da conta */
+        .account-info {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: left;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .info-value {
+            color: var(--text-primary);
+            font-size: 12px;
+            font-family: 'Monaco', monospace;
+        }
+
+        .info-value.masked {
+            color: var(--accent);
+            letter-spacing: 2px;
+        }
+
+        .password-value {
+            color: var(--accent);
+            font-family: 'Monaco', monospace;
+            letter-spacing: 2px;
+        }
+
+        /* Token display */
+        .token-display {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 16px 0;
+        }
+
+        .token-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .token-value {
+            font-family: 'Monaco', monospace;
+            font-size: 11px;
+            color: var(--text-secondary);
+            word-break: break-all;
+            background: var(--bg-tertiary);
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        /* Botões de download */
+        .download-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .download-btn {
+            padding: 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .download-btn:hover {
+            border-color: var(--accent);
+            background: rgba(228, 64, 95, 0.1);
+        }
+
+        .download-btn.cookies {
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .download-btn.password {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        /* Login animation */
+        .login-animation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .animation-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 8px;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+
+        .animation-step.active {
+            opacity: 1;
+            border-left: 3px solid var(--accent);
+            background: rgba(228, 64, 95, 0.1);
+        }
+
+        .animation-step.completed {
+            opacity: 1;
+            border-left: 3px solid var(--success);
+        }
+
+        .step-icon {
+            width: 30px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .step-text {
+            flex: 1;
+            font-size: 13px;
+        }
+
+        .step-status {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Logs */
+        .logs-container {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            height: 150px;
+            overflow-y: auto;
+            font-family: 'Monaco', monospace;
+            font-size: 12px;
+        }
+
+        .log-entry {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            display: flex;
+            gap: 12px;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .log-time {
+            color: var(--accent);
+            opacity: 0.7;
+        }
+
+        .log-success {
+            color: var(--success);
+        }
+
+        /* Status footer */
+        .status-footer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+            padding: 16px 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .footer-icon {
+            font-size: 24px;
+        }
+
+        .footer-info {
+            text-align: left;
+        }
+
+        .footer-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .footer-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .footer-value.top {
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(228, 64, 95, 0.3);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Success count */
+        .success-count {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .machine-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .status {
+                flex-wrap: wrap;
+            }
+            
+            .status-footer {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pattern"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <!-- Instagram official icon using SVG -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z" fill="white"/>
+                    </svg>
+                </div>
+                <span class="logo-text">INSTAGRAM HACKING</span>
+            </div>
+            <div class="status">
+                <div class="status-item">
+                    <span class="dot"></span>
+                    <span>api: live</span>
+                </div>
+                <div class="status-item">
+                    <span>🔒</span>
+                    <span>tor: active</span>
+                </div>
+                <div class="status-item">
+                    <span>🕒</span>
+                    <span id="sessionTimer">00:00:00</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Grid -->
+        <div class="grid">
+            <!-- Attack Panel -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i>⚡</i>
+                        <span>Instagram Attack</span>
+                    </div>
+                    <span class="badge" id="attackStatus">ready</span>
+                </div>
+                <div class="card-content">
+                    <!-- Target Input -->
+                    <div class="instagram-input">
+                        <label class="input-label">Target username</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">@</span>
+                            <input type="text" class="input-field" id="targetUser" placeholder="username" value="target_account">
+                        </div>
+                    </div>
+
+                    <!-- Machine Grid - 10 machines (TEMPO MAIOR) -->
+                    <div style="margin-bottom: 20px;">
+                        <label class="input-label">Attack nodes <span style="color: var(--text-secondary); font-size: 11px;">(tempo estimado: 45-60s)</span></label>
+                        <div class="machine-grid" id="machineGrid">
+                            <!-- Generated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="attemptCount">0</div>
+                            <div class="stat-label">attempts</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="successCount">0</div>
+                            <div class="stat-label">success</div>
+                        </div>
+                    </div>
+
+                    <!-- Progress -->
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Overall progress</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Buttons - CORRIGIDO: STOP começa desabilitado -->
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="startAttack()" style="flex: 2;" id="startBtn">
+                            <span>⚡</span>
+                            START ATTACK
+                        </button>
+                        <button class="btn btn-danger" onclick="stopAttack()" style="flex: 1;" id="stopBtn" disabled>
+                            <span>■</span>
+                            STOP
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session Panel -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i>👤</i>
+                        <span>Instagram Session</span>
+                    </div>
+                    <span class="badge" id="sessionStatus">locked</span>
+                </div>
+                <div class="card-content">
+                    <div class="session-panel">
+                        <!-- Placeholder (mostra enquanto não está logado) -->
+                        <div class="session-placeholder" id="sessionPlaceholder">
+                            <div class="lock-icon">🔒</div>
+                            <div class="placeholder-title">Deslogado</div>
+                            <div class="placeholder-subtitle">Nenhuma conta ativa no momento</div>
+                            <div class="placeholder-subtitle" style="font-size: 11px; margin-top: 8px;">inicie um ataque para capturar sessão</div>
+                        </div>
+
+                        <!-- Conteúdo da sessão (só aparece após login) -->
+                        <div class="session-content" id="sessionContent">
+                            <!-- Área da animação de login -->
+                            <div id="loginAnimation" class="login-animation">
+                                <div class="animation-step" id="step1">
+                                    <span class="step-icon">🔑</span>
+                                    <span class="step-text">Quebrando hash da senha...</span>
+                                    <span class="step-status" id="step1Status">⏳</span>
+                                </div>
+                                <div class="animation-step" id="step2">
+                                    <span class="step-icon">🍪</span>
+                                    <span class="step-text">Capturando cookies de sessão...</span>
+                                    <span class="step-status" id="step2Status">⏳</span>
+                                </div>
+                                <div class="animation-step" id="step3">
+                                    <span class="step-icon">🔓</span>
+                                    <span class="step-text">Estabelecendo conexão...</span>
+                                    <span class="step-status" id="step3Status">⏳</span>
+                                </div>
+                            </div>
+
+                            <!-- Dados do perfil (aparecem depois da animação) -->
+                            <div id="profileData" style="display: none;">
+                                <div class="instagram-avatar" id="sessionAvatar">
+                                    <img src="https://scontent-gru1-2.cdninstagram.com/v/t51.2885-19/504240464_17842755327509792_5985687214084890473_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-gru1-2.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHV2yz3_4MFrJiRcVzVMOy8DeCT6dZtt16BygKAJoRUfhEJA6RdCw28P7_2PTzLFHUW0dXodlaTxCzVR_4_5OWE&_nc_ohc=2aAJNhozG_gQ7kNvwEWIyaW&_nc_gid=waOmvPvdxgVVaaj2QoZNrA&edm=ALGbJPMBAAAA&ccb=7-5&oh=00_Afw1YqUwSaW5Mxvqlbi5t4enpJPHI9KR_pUGxd00jTocnw&oe=69BCAA0E&_nc_sid=7d3ac5" alt="profile" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                </div>
+                                
+                                <div class="profile-header">
+                                    <div class="session-name" id="sessionName">CyberXpert</div>
+                                    <div class="session-username" id="sessionUsername">@cybe.rxpert</div>
+                                    <span class="profile-badge">perfil acessado</span>
+                                </div>
+
+                                <!-- Informações realistas da conta - ATUALIZADAS 2026 -->
+                                <div class="account-info">
+                                    <div class="info-row">
+                                        <span class="info-label">Full name:</span>
+                                        <span class="info-value" id="fullName"></span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Email:</span>
+                                        <span class="info-value" id="accountEmail"></span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Phone:</span>
+                                        <span class="info-value" id="accountPhone">+55 21 97592-7909</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Password:</span>
+                                        <span class="info-value password-value" id="accountPassword">••••••••••</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Last login:</span>
+                                        <span class="info-value" id="lastLogin">2026-03-15 10:20:00</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">IP:</span>
+                                        <span class="info-value" id="accountIp">95.173.136.78</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Device:</span>
+                                        <span class="info-value" id="accountDevice">Windows 11 Pro</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Session token:</span>
+                                        <span class="info-value masked" id="sessionToken">••••••••••••••••</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">CSRF token:</span>
+                                        <span class="info-value masked" id="csrfToken">••••••••••••••••</span>
+                                    </div>
+                                </div>
+
+                                <!-- Botões de download -->
+                                <div class="download-buttons">
+                                    <button class="download-btn cookies" onclick="downloadCookies()">
+                                        <span>🍪</span>
+                                        BAIXAR COOKIES
+                                    </button>
+                                    <button class="download-btn password" onclick="downloadPassword()">
+                                        <span>🔑</span>
+                                        BAIXAR SENHA
+                                    </button>
+                                </div>
+
+                                <!-- Botão Logout -->
+                                <div class="btn-group">
+                                    <button class="btn btn-danger" onclick="logout()" style="flex: 1;" id="logoutBtn">
+                                        <span>🚪</span>
+                                        LOGOUT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logs -->
+        <div class="card" style="margin-top: 24px;">
+            <div class="card-header">
+                <div class="card-title">
+                    <i>📋</i>
+                    <span>Attack Log</span>
+                </div>
+                <span class="badge">live</span>
+            </div>
+            <div class="card-content">
+                <div class="logs-container" id="logContainer">
+                    <div class="log-entry">
+                        <span class="log-time">[00:00:00]</span>
+                        <span>Instagram Hacking tool initialized</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Footer -->
+        <div class="status-footer">
+            <div class="footer-item">
+                <div class="footer-icon">🤖</div>
+                <div class="footer-info">
+                    <div class="footer-label">ACTIVE NODES</div>
+                    <div class="footer-value" id="activeNodes">0/10</div>
+                </div>
+            </div>
+            <div class="footer-item">
+                <div class="footer-icon">⚡</div>
+                <div class="footer-info">
+                    <div class="footer-label">ATTACK SPEED</div>
+                    <div class="footer-value" id="attackSpeed">0/s</div>
+                </div>
+            </div>
+            <div class="footer-item">
+                <div class="footer-icon">🏆</div>
+                <div class="footer-info">
+                    <div class="footer-label">STATUS</div>
+                    <div class="footer-value top" id="statusMessage">
+                        <span>✨</span> READY
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURAÇÕES FIXAS - DADOS REALISTAS ATUALIZADOS 2026
+        const PROFILE_CONFIG = {
+            photoUrl: 'https://scontent-gru1-2.cdninstagram.com/v/t51.2885-19/504240464_17842755327509792_5985687214084890473_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-gru1-2.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHV2yz3_4MFrJiRcVzVMOy8DeCT6dZtt16BygKAJoRUfhEJA6RdCw28P7_2PTzLFHUW0dXodlaTxCzVR_4_5OWE&_nc_ohc=2aAJNhozG_gQ7kNvwEWIyaW&_nc_gid=waOmvPvdxgVVaaj2QoZNrA&edm=ALGbJPMBAAAA&ccb=7-5&oh=00_Afw1YqUwSaW5Mxvqlbi5t4enpJPHI9KR_pUGxd00jTocnw&oe=69BCAA0E&_nc_sid=7d3ac5',
+            name: 'CyberXpert',
+            username: '@cybe.rxpert',
+            fullName: '',
+            email: '',
+            phone: '+55 21 97592-7909',
+            password: 'An@2024#Insta',
+            lastLogin: '2026-03-15 10:20:00',
+            ip: '95.173.136.78',
+            device: 'Windows 11 Pro',
+            sessionToken: '••••••••••••••••',
+            csrfToken: '••••••••••••••••'
+        };
+
+        // Password list for Instagram
+        const instagramPasswords = [
+            '123456', 'instagram', 'password', '12345678', 'qwerty',
+            '123456789', '12345', '1234567', '1234567890', 'senha',
+            'insta123', 'fotografia', 'brasil2024', 'amor123', 'futebol',
+            '@instagram', '#instagram', 'photo2024', 'like4like', 'followme',
+            'instagram1', 'insta_user', 'socialmedia', 'picture123', 'selfie'
+        ];
+
+        // State
+        let attackActive = false;
+        let attackInterval;
+        let attempts = 0;
+        let successes = 0;
+        let machines = [];
+        let completedMachines = 0;
+        let isLoggedIn = false;
+
+        // DOM Elements
+        const elements = {
+            targetUser: document.getElementById('targetUser'),
+            attemptCount: document.getElementById('attemptCount'),
+            successCount: document.getElementById('successCount'),
+            progressBar: document.getElementById('progressBar'),
+            progressPercent: document.getElementById('progressPercent'),
+            logContainer: document.getElementById('logContainer'),
+            sessionName: document.getElementById('sessionName'),
+            sessionUsername: document.getElementById('sessionUsername'),
+            sessionAvatar: document.getElementById('sessionAvatar'),
+            sessionStatus: document.getElementById('sessionStatus'),
+            logoutBtn: document.getElementById('logoutBtn'),
+            startBtn: document.getElementById('startBtn'),
+            stopBtn: document.getElementById('stopBtn'),
+            attackStatus: document.getElementById('attackStatus'),
+            machineGrid: document.getElementById('machineGrid'),
+            activeNodes: document.getElementById('activeNodes'),
+            attackSpeed: document.getElementById('attackSpeed'),
+            statusMessage: document.getElementById('statusMessage'),
+            sessionPlaceholder: document.getElementById('sessionPlaceholder'),
+            sessionContent: document.getElementById('sessionContent'),
+            loginAnimation: document.getElementById('loginAnimation'),
+            profileData: document.getElementById('profileData'),
+            step1: document.getElementById('step1'),
+            step2: document.getElementById('step2'),
+            step3: document.getElementById('step3'),
+            step1Status: document.getElementById('step1Status'),
+            step2Status: document.getElementById('step2Status'),
+            step3Status: document.getElementById('step3Status')
+        };
+
+        // Elementos adicionais para informações da conta
+        const accountElements = {
+            fullName: document.getElementById('fullName'),
+            accountEmail: document.getElementById('accountEmail'),
+            accountPhone: document.getElementById('accountPhone'),
+            accountPassword: document.getElementById('accountPassword'),
+            lastLogin: document.getElementById('lastLogin'),
+            accountIp: document.getElementById('accountIp'),
+            accountDevice: document.getElementById('accountDevice'),
+            sessionToken: document.getElementById('sessionToken'),
+            csrfToken: document.getElementById('csrfToken')
+        };
+
+        // Aplicar configurações fixas
+        function applyFixedConfig() {
+            elements.sessionName.textContent = PROFILE_CONFIG.name;
+            elements.sessionUsername.textContent = PROFILE_CONFIG.username;
+            
+            // Preencher informações da conta
+            if (accountElements.fullName) accountElements.fullName.textContent = PROFILE_CONFIG.fullName;
+            if (accountElements.accountEmail) accountElements.accountEmail.textContent = PROFILE_CONFIG.email;
+            if (accountElements.accountPhone) accountElements.accountPhone.textContent = PROFILE_CONFIG.phone;
+            if (accountElements.accountPassword) accountElements.accountPassword.textContent = '•'.repeat(PROFILE_CONFIG.password.length);
+            if (accountElements.lastLogin) accountElements.lastLogin.textContent = PROFILE_CONFIG.lastLogin;
+            if (accountElements.accountIp) accountElements.accountIp.textContent = PROFILE_CONFIG.ip;
+            if (accountElements.accountDevice) accountElements.accountDevice.textContent = PROFILE_CONFIG.device;
+            if (accountElements.sessionToken) accountElements.sessionToken.textContent = PROFILE_CONFIG.sessionToken;
+            if (accountElements.csrfToken) accountElements.csrfToken.textContent = PROFILE_CONFIG.csrfToken;
+            
+            const avatarImg = elements.sessionAvatar.querySelector('img');
+            if (avatarImg) {
+                avatarImg.src = PROFILE_CONFIG.photoUrl;
+                avatarImg.onerror = function() {
+                    console.log('Erro ao carregar imagem, usando fallback');
+                    this.src = 'https://randomuser.me/api/portraits/women/44.jpg';
+                };
+            }
+        }
+
+        // Initialize machines
+        function initMachines() {
+            machines = [];
+            for (let i = 0; i < 10; i++) {
+                machines.push({
+                    id: i + 1,
+                    active: false,
+                    progress: 0,
+                    completed: false
+                });
+            }
+            renderMachines();
+        }
+
+        // Render machines
+        function renderMachines() {
+            elements.machineGrid.innerHTML = '';
+            machines.forEach(machine => {
+                const div = document.createElement('div');
+                div.className = `machine-item ${machine.active ? 'active' : ''} ${machine.completed ? 'completed' : ''}`;
+                div.id = `machine-${machine.id}`;
+                
+                div.innerHTML = `
+                    <div class="machine-icon">${machine.completed ? '✅' : '💻'}</div>
+                    <div class="machine-status">node ${machine.id}</div>
+                    <div class="machine-progress">
+                        <div class="machine-bar" style="width: ${machine.progress}%"></div>
+                    </div>
+                `;
+                
+                elements.machineGrid.appendChild(div);
+            });
+            
+            const activeCount = machines.filter(m => m.active).length;
+            elements.activeNodes.textContent = `${activeCount}/10`;
+        }
+
+        // Update machine progress - TEMPO MAIOR (progresso mais lento)
+        function updateMachineProgress() {
+            if (!attackActive) return;
+            
+            machines.forEach((machine) => {
+                if (!machine.completed) {
+                    if (Math.random() > 0.8 && !machine.active) {
+                        machine.active = true;
+                    }
+                    
+                    if (machine.active && !machine.completed) {
+                        machine.progress += Math.random() * 1.5;
+                        
+                        if (machine.progress >= 100) {
+                            machine.progress = 100;
+                            machine.completed = true;
+                            machine.active = false;
+                            completedMachines++;
+                            
+                            addLog(`✅ Node ${machine.id} completed`, 'success');
+                            
+                            if (completedMachines === 10) {
+                                finishAttack();
+                            }
+                        }
+                    }
+                }
+            });
+            
+            renderMachines();
+        }
+
+        // Login animation
+        async function playLoginAnimation() {
+            return new Promise((resolve) => {
+                elements.loginAnimation.style.display = 'block';
+                elements.profileData.style.display = 'none';
+                
+                elements.step1.classList.remove('completed', 'active');
+                elements.step2.classList.remove('completed', 'active');
+                elements.step3.classList.remove('completed', 'active');
+                elements.step1Status.textContent = '⏳';
+                elements.step2Status.textContent = '⏳';
+                elements.step3Status.textContent = '⏳';
+                
+                setTimeout(() => {
+                    elements.step1.classList.add('active');
+                    elements.step1Status.textContent = '⚡';
+                    addLog('🔑 Quebrando hash da senha...', 'info');
+                }, 500);
+                
+                setTimeout(() => {
+                    elements.step1.classList.remove('active');
+                    elements.step1.classList.add('completed');
+                    elements.step1Status.textContent = '✅';
+                    addLog('✅ Hash quebrado com sucesso', 'success');
+                }, 2000);
+                
+                setTimeout(() => {
+                    elements.step2.classList.add('active');
+                    elements.step2Status.textContent = '⚡';
+                    addLog('🍪 Capturando cookies de sessão...', 'info');
+                }, 2500);
+                
+                setTimeout(() => {
+                    elements.step2.classList.remove('active');
+                    elements.step2.classList.add('completed');
+                    elements.step2Status.textContent = '✅';
+                    addLog('✅ Cookies capturados', 'success');
+                }, 4000);
+                
+                setTimeout(() => {
+                    elements.step3.classList.add('active');
+                    elements.step3Status.textContent = '⚡';
+                    addLog('🔓 Estabelecendo conexão segura...', 'info');
+                }, 4500);
+                
+                setTimeout(() => {
+                    elements.step3.classList.remove('active');
+                    elements.step3.classList.add('completed');
+                    elements.step3Status.textContent = '✅';
+                    addLog('🔓 Login realizado com sucesso!', 'success');
+                    
+                    elements.loginAnimation.style.display = 'none';
+                    elements.profileData.style.display = 'block';
+                    
+                    resolve();
+                }, 6000);
+            });
+        }
+
+        // Finish attack and start login
+        async function finishAttack() {
+            stopAttack();
+            
+            elements.statusMessage.innerHTML = '<span>🏆</span> COMPLETED';
+            elements.statusMessage.style.color = 'var(--success)';
+            addLog('🎯 ATTACK COMPLETED - All nodes finished', 'success');
+            
+            await new Promise(r => setTimeout(r, 1000));
+            
+            elements.sessionPlaceholder.classList.add('hidden');
+            elements.sessionContent.classList.add('visible');
+            elements.sessionStatus.textContent = 'logging in';
+            elements.sessionStatus.style.color = 'var(--warning)';
+            
+            addLog('🔐 Iniciando processo de login...', 'info');
+            
+            await playLoginAnimation();
+            
+            isLoggedIn = true;
+            elements.sessionStatus.textContent = 'active';
+            elements.sessionStatus.style.color = 'var(--success)';
+            elements.statusMessage.innerHTML = '<span>✨</span> LOGGED IN';
+            
+            successes = 1;
+            elements.successCount.textContent = '1';
+            
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    elements.statusMessage.innerHTML = '<span>✨</span> TOP';
+                }, 500);
+            }
+        }
+
+        // Attack functions
+        function startAttack() {
+            const target = elements.targetUser.value;
+            if (!target) {
+                addLog('Error: Target username required', 'error');
+                return;
+            }
+
+            if (attackActive) return;
+
+            isLoggedIn = false;
+            elements.sessionPlaceholder.classList.remove('hidden');
+            elements.sessionContent.classList.remove('visible');
+            elements.loginAnimation.style.display = 'block';
+            elements.profileData.style.display = 'none';
+            elements.sessionStatus.textContent = 'locked';
+            elements.sessionStatus.style.color = 'var(--text-secondary)';
+
+            attackActive = true;
+            attempts = 0;
+            successes = 0;
+            completedMachines = 0;
+            
+            elements.successCount.textContent = '0';
+            
+            initMachines();
+            
+            elements.attackStatus.textContent = 'attacking';
+            elements.attackStatus.style.color = 'var(--accent)';
+            elements.statusMessage.innerHTML = '<span>⚡</span> ATTACKING';
+            
+            elements.startBtn.disabled = true;
+            elements.stopBtn.disabled = false;
+            
+            addLog(`⚡ Attack started on @${target}`, 'success');
+            
+            let startTime = Date.now();
+            
+            attackInterval = setInterval(() => {
+                if (!attackActive) return;
+                
+                attempts++;
+                elements.attemptCount.textContent = attempts;
+                
+                updateMachineProgress();
+                
+                const totalProgress = machines.reduce((sum, m) => sum + m.progress, 0) / 10;
+                elements.progressBar.style.width = totalProgress + '%';
+                elements.progressPercent.textContent = Math.round(totalProgress) + '%';
+                
+                const elapsed = (Date.now() - startTime) / 1000;
+                const speed = Math.round(attempts / elapsed);
+                elements.attackSpeed.textContent = speed + '/s';
+                
+                if (attempts % 25 === 0) {
+                    const activeCount = machines.filter(m => m.active).length;
+                    addLog(`Progress: ${Math.round(totalProgress)}% | ${activeCount} active nodes`);
+                }
+                
+            }, 100);
+        }
+
+        function stopAttack() {
+            if (!attackActive) return;
+            
+            attackActive = false;
+            clearInterval(attackInterval);
+            elements.attackStatus.textContent = 'stopped';
+            elements.attackStatus.style.color = 'var(--text-secondary)';
+            elements.attackSpeed.textContent = '0/s';
+            elements.statusMessage.innerHTML = '<span>⏸️</span> STOPPED';
+            
+            elements.startBtn.disabled = false;
+            elements.stopBtn.disabled = true;
+            
+            addLog('⛔ Attack stopped');
+        }
+
+        // Download functions
+        function downloadCookies() {
+            if (!isLoggedIn) return;
+            
+            const cookies = `# Instagram session cookies
+# Generated: ${new Date().toISOString()}
+# Account: ${PROFILE_CONFIG.username}
+# IP: ${PROFILE_CONFIG.ip} (Moscow, Russia)
+
+sessionid=ig_a8f7e2d9c3b1;
+csrftoken=8x7w3k9p2m5n;
+ds_user_id=4567823941;
+ig_did=8F7E-2D9C-3B1A-4K5M;
+mid=ZyXwVuTsRqPoNmLk;
+rur="RVA: ${Math.random().toString(36).substring(7)}";
+shbid="${Math.random().toString(36).substring(10)}";
+shbts="${Date.now()}";
+urlgen="{\"${PROFILE_CONFIG.ip}\": 1}";`;
+
+            const blob = new Blob([cookies], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `instagram_cookies_${PROFILE_CONFIG.username.replace('@', '')}.txt`;
+            a.click();
+            
+            addLog('🍪 Cookies exportados com sucesso', 'success');
+        }
+
+        function downloadPassword() {
+            if (!isLoggedIn) return;
+            
+            const passwordData = `# Instagram account credentials
+# Generated: ${new Date().toISOString()}
+# Target: ${PROFILE_CONFIG.username}
+# IP: ${PROFILE_CONFIG.ip} (Moscow, Russia)
+
+USERNAME: ${PROFILE_CONFIG.username.replace('@', '')}
+PASSWORD: ${PROFILE_CONFIG.password}
+PHONE: ${PROFILE_CONFIG.phone}
+
+# Login URL: https://www.instagram.com/accounts/login/
+# Last access: ${PROFILE_CONFIG.lastLogin}
+# IP: ${PROFILE_CONFIG.ip}
+# Device: ${PROFILE_CONFIG.device}
+# Location: Moscow, Russia`;
+
+            const blob = new Blob([passwordData], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `instagram_password_${PROFILE_CONFIG.username.replace('@', '')}.txt`;
+            a.click();
+            
+            addLog('🔑 Senha exportada com sucesso', 'success');
+        }
+
+        // Logout function
+        function logout() {
+            if (!isLoggedIn) return;
+            
+            isLoggedIn = false;
+            
+            elements.sessionPlaceholder.classList.remove('hidden');
+            elements.sessionContent.classList.remove('visible');
+            elements.loginAnimation.style.display = 'block';
+            elements.profileData.style.display = 'none';
+            elements.sessionStatus.textContent = 'locked';
+            elements.sessionStatus.style.color = 'var(--text-secondary)';
+            elements.statusMessage.innerHTML = '<span>✨</span> READY';
+            
+            successes = 0;
+            elements.successCount.textContent = '0';
+            
+            addLog('👋 Logout realizado - sessão encerrada', 'info');
+        }
+
+        // Log system
+        function addLog(message, type = 'info') {
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            
+            const time = new Date();
+            const timeStr = `[${time.getHours().toString().padStart(2,'0')}:${time.getMinutes().toString().padStart(2,'0')}:${time.getSeconds().toString().padStart(2,'0')}]`;
+            
+            let className = '';
+            if (type === 'success') className = 'log-success';
+            
+            entry.innerHTML = `<span class="log-time">${timeStr}</span> <span class="${className}">${message}</span>`;
+            
+            elements.logContainer.appendChild(entry);
+            elements.logContainer.scrollTop = elements.logContainer.scrollHeight;
+            
+            while (elements.logContainer.children.length > 30) {
+                elements.logContainer.removeChild(elements.logContainer.children[0]);
+            }
+        }
+
+        // Timer update
+        function updateTimer() {
+            setInterval(() => {
+                const timer = document.getElementById('sessionTimer');
+                const time = timer.textContent.split(':');
+                let h = parseInt(time[0]), m = parseInt(time[1]), s = parseInt(time[2]) + 1;
+                if (s >= 60) { s = 0; m++; }
+                if (m >= 60) { m = 0; h++; }
+                timer.textContent = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            }, 1000);
+        }
+
+        // Initialize
+        function init() {
+            applyFixedConfig();
+            initMachines();
+            updateTimer();
+            addLog('Instagram Hacking tool initialized');
+            addLog('Ready for target: @' + elements.targetUser.value);
+            elements.statusMessage.innerHTML = '<span>✨</span> READY';
+            
+            elements.startBtn.disabled = false;
+            elements.stopBtn.disabled = true;
+            
+            elements.sessionPlaceholder.classList.remove('hidden');
+            elements.sessionContent.classList.remove('visible');
+            elements.loginAnimation.style.display = 'block';
+            elements.profileData.style.display = 'none';
+        }
+
+        init();
+    </script>
+</body>
+</html>
