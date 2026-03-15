@@ -515,11 +515,16 @@
             overflow: hidden;
         }
 
-        .instagram-avatar img {
+        /* Avatar padrão do Instagram (silhueta cinza) */
+        .default-avatar {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            display: block;
+            background: #8e8e8e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #3a3a3a;
         }
 
         .profile-header {
@@ -980,8 +985,9 @@
 
                             <!-- Dados do perfil (aparecem depois da animação) -->
                             <div id="profileData" style="display: none;">
+                                <!-- Avatar padrão do Instagram (silhueta) -->
                                 <div class="instagram-avatar" id="sessionAvatar">
-                                    <img src="https://scontent-gru1-2.cdninstagram.com/v/t51.2885-19/504240464_17842755327509792_5985687214084890473_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-gru1-2.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHV2yz3_4MFrJiRcVzVMOy8DeCT6dZtt16BygKAJoRUfhEJA6RdCw28P7_2PTzLFHUW0dXodlaTxCzVR_4_5OWE&_nc_ohc=2aAJNhozG_gQ7kNvwEWIyaW&_nc_gid=waOmvPvdxgVVaaj2QoZNrA&edm=ALGbJPMBAAAA&ccb=7-5&oh=00_Afw1YqUwSaW5Mxvqlbi5t4enpJPHI9KR_pUGxd00jTocnw&oe=69BCAA0E&_nc_sid=7d3ac5" alt="profile" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                    <div class="default-avatar">👤</div>
                                 </div>
                                 
                                 <div class="profile-header">
@@ -1106,7 +1112,6 @@
     <script>
         // CONFIGURAÇÕES FIXAS - DADOS REALISTAS ATUALIZADOS 2026
         const PROFILE_CONFIG = {
-            photoUrl: 'https://scontent-gru1-2.cdninstagram.com/v/t51.2885-19/504240464_17842755327509792_5985687214084890473_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-gru1-2.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHV2yz3_4MFrJiRcVzVMOy8DeCT6dZtt16BygKAJoRUfhEJA6RdCw28P7_2PTzLFHUW0dXodlaTxCzVR_4_5OWE&_nc_ohc=2aAJNhozG_gQ7kNvwEWIyaW&_nc_gid=waOmvPvdxgVVaaj2QoZNrA&edm=ALGbJPMBAAAA&ccb=7-5&oh=00_Afw1YqUwSaW5Mxvqlbi5t4enpJPHI9KR_pUGxd00jTocnw&oe=69BCAA0E&_nc_sid=7d3ac5',
             name: 'CyberXpert',
             username: '@cybe.rxpert',
             fullName: '',
@@ -1198,15 +1203,6 @@
             if (accountElements.accountDevice) accountElements.accountDevice.textContent = PROFILE_CONFIG.device;
             if (accountElements.sessionToken) accountElements.sessionToken.textContent = PROFILE_CONFIG.sessionToken;
             if (accountElements.csrfToken) accountElements.csrfToken.textContent = PROFILE_CONFIG.csrfToken;
-            
-            const avatarImg = elements.sessionAvatar.querySelector('img');
-            if (avatarImg) {
-                avatarImg.src = PROFILE_CONFIG.photoUrl;
-                avatarImg.onerror = function() {
-                    console.log('Erro ao carregar imagem, usando fallback');
-                    this.src = 'https://randomuser.me/api/portraits/women/44.jpg';
-                };
-            }
         }
 
         // Initialize machines
